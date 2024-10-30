@@ -9,7 +9,8 @@
       "methods": [
         "get",
         "post"
-      ]
+      ],
+      "connection":"MONGO_DB_CONNECTION_STRING"
     },
     {
       "type": "http",

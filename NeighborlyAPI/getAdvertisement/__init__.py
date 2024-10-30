@@ -4,6 +4,7 @@ import json
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 import logging
+import os
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
 
@@ -14,10 +15,14 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     
     if id:
         try:
-            url = "localhost"  # TODO: Update with appropriate MongoDB connection information
+            url = os.environ.get("MONGO_DB_CONNECTION_STRING")  # TODO: Update with appropriate MongoDB connection information
+            print("The url is: ", url)
             client = pymongo.MongoClient(url)
-            database = client['azure']
+            db_name = os.environ.get("MONGO_DB_NAME")
+            database = client[db_name]
+            print("The db_name is: ", db_name)
             collection = database['advertisements']
+            print("The collection is: ", collection)
            
             query = {'_id': ObjectId(id)}
             result = collection.find_one(query)
